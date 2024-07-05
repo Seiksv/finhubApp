@@ -220,7 +220,7 @@ class StockSelect extends Component {
               />
 
               <Text>
-                The notifications functionality works only in LiveStocks tab
+                The notifications functionality works only in LiveStock
               </Text>
               <View style={styles.buttonContainer}>
                 <Button
@@ -228,12 +228,7 @@ class StockSelect extends Component {
                   mode="contained"
                   buttonColor="#fff"
                   labelStyle={{ color: "#B00020", fontSize: 18 }}
-                  style={{
-                    marginTop: 10,
-                    flex: 1,
-                    borderWidth: 2,
-                    borderColor: "#B00020",
-                  }}
+                  style={styles.cancelButton}
                 >
                   Cancel
                 </Button>
@@ -256,7 +251,7 @@ class StockSelect extends Component {
                   mode="contained"
                   buttonColor="#ff7300"
                   labelStyle={{ color: "#fff", fontSize: 18 }}
-                  style={{ marginTop: 10, flex: 1, marginStart: 10 }}
+                  style={styles.saveButton}
                 >
                   Save
                 </Button>
@@ -278,6 +273,13 @@ class StockSelect extends Component {
 }
 
 const styles = StyleSheet.create({
+  cancelButton: {
+    marginTop: 10,
+    flex: 1,
+    borderWidth: 2,
+    borderColor: "#B00020",
+  },
+  saveButton: { marginTop: 10, flex: 1, marginStart: 10 },
   container: {
     flex: 1,
     justifyContent: "center",

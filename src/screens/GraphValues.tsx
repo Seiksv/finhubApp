@@ -5,11 +5,13 @@ import {
   ActivityIndicator,
   Animated,
   Dimensions,
+  StyleSheet,
 } from "react-native";
 import StocksLineChart from "../components/specific/LineChart";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { globalEventEmitter } from "./StockSelect";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { Button } from "react-native-paper";
 import { SOCKET_URL, API_KEY } from "../utils/constans";
 class GraphDataModel {
   labels: string[];
@@ -35,6 +37,8 @@ type State = {
   priceAlerts: any[];
   token: string;
   graphData: GraphDataModel;
+  countdown: number;
+  countdownTimer: any;
 };
 
 class GraphValues extends Component {
@@ -43,8 +47,8 @@ class GraphValues extends Component {
     super(props);
     this.state = {
       graphData: {
-        legend: ["Rainy Days"],
-        labels: ["Junio"],
+        legend: [""],
+        labels: [""],
         datasets: [
           {
             data: [0],
@@ -60,21 +64,54 @@ class GraphValues extends Component {
       error: null,
       token: "",
       fadeAnim: new Animated.Value(0),
+      countdown: 0,
+      countdownTimer: null,
     };
   }
+
+  countdownTimer: any;
 
   ws: WebSocket | null = null;
 
   componentDidMount() {
-    this.remountWebSocket();
-
+    this.loadSelectedStock().then(() => {
+      this.getUseWebSocket(this.state.selectedStocks);
+    });
     globalEventEmitter.addListener("stockUpdated", this.remountWebSocket);
   }
 
   componentWillUnmount() {
     globalEventEmitter.removeListener("stockUpdated", this.loadSelectedStock);
     this.ws?.close();
+    this.ws = null;
+    if (this.countdownTimer) {
+      clearInterval(this.countdownTimer);
+    }
   }
+
+  startCountdown = () => {
+    this.setState({ countdown: 30 });
+    this.countdownTimer = setInterval(() => {
+      this.setState(
+        (prevState) => ({
+          countdown: prevState.countdown - 1,
+        }),
+        () => {
+          if (this.state.countdown <= 0) {
+            clearInterval(this.countdownTimer);
+          }
+        }
+      );
+    }, 1000);
+  };
+
+  handleReload = () => {
+    if (this.countdownTimer) {
+      clearInterval(this.countdownTimer);
+    }
+    this.setState({ error: null, countdown: 0 });
+    this.remountWebSocket();
+  };
 
   generateNewData = (selectedStocks: string[], priceAlerts: any[]) => {
     const newData = {
@@ -121,6 +158,7 @@ class GraphValues extends Component {
       if (this.ws !== null) {
         if (selectedStocks.length > 0) {
           selectedStocks.forEach((stock) => {
+            console.log("Subscribing to", stock);
             this.ws?.send(
               JSON.stringify({
                 type: "subscribe",
@@ -133,6 +171,7 @@ class GraphValues extends Component {
     };
 
     this.ws.onmessage = (e) => {
+      console.log("Message", e.data);
       const data = JSON.parse(e.data);
       if (data.type === "trade" && data.data.length > 0) {
         const lastElement = data.data[data.data.length - 1];
@@ -175,6 +214,7 @@ class GraphValues extends Component {
     };
 
     this.ws.onerror = (e: Event) => {
+      this.startCountdown();
       console.log("Error", e.message);
       this.setState({
         error: e.message,
@@ -186,19 +226,79 @@ class GraphValues extends Component {
   };
 
   remountWebSocket = () => {
+    this.setState({ loading: true });
     this.intervalID && clearInterval(this.intervalID);
     this.intervalID = null;
     this.loadSelectedStock().then(() => {
       this.ws?.close();
-
       this.ws = null;
       this.getUseWebSocket(this.state.selectedStocks);
     });
   };
 
   render() {
-    const { loading, fadeAnim, error } = this.state;
+    const { fadeAnim } = this.state;
 
+    if (this.state.error) {
+      return (
+        <View style={styles.errorContainer}>
+          <MaterialIcons name="error-outline" size={48} color="white" />
+          <Text style={styles.titleError}>Error message:</Text>
+          <Text style={styles.descriptionError}>{this.state.error}</Text>
+
+          {this.state.countdown > 0 ? (
+            <View
+              style={{
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: 10,
+              }}
+            >
+              <Text
+                style={{ fontSize: 14, fontStyle: "italic", color: "#fff" }}
+              >
+                Try again later.
+              </Text>
+              <Button
+                mode="contained"
+                onPress={this.handleReload}
+                color="#6200EE"
+                labelStyle={{ color: "white", fontSize: 18 }}
+                disabled
+                style={{ marginTop: 10 }}
+              >
+                Retry at {this.state.countdown} seconds...
+              </Button>
+            </View>
+          ) : (
+            <Button
+              mode="contained"
+              onPress={this.handleReload}
+              buttonColor="#fff"
+              labelStyle={{ color: "#B00020", fontSize: 18 }}
+              style={{ marginTop: 10 }}
+            >
+              Retry now
+            </Button>
+          )}
+        </View>
+      );
+    }
+    if (this.state.loading) {
+      return (
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <ActivityIndicator size="large" color="tomato" />
+          <Text>Loading data from server...</Text>
+        </View>
+      );
+    }
     return (
       <View
         style={{
@@ -207,56 +307,52 @@ class GraphValues extends Component {
           alignItems: "center",
         }}
       >
-        {loading ? (
-          <View>
-            <ActivityIndicator size="large" color="tomato" />
-            <Text>Loading data from server...</Text>
-          </View>
-        ) : error != null ? (
-          <View
-            style={{
-              width: Dimensions.get("window").width - 40,
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: "#B00020",
-              padding: 20,
-              borderRadius: 8,
-              margin: 10,
-            }}
-          >
-            <MaterialIcons name="error-outline" size={48} color="white" />
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                color: "#fff",
-                marginBottom: 10,
-                marginTop: 10,
-              }}
-            >
-              Error message:
-            </Text>
-            <Text style={{ fontSize: 14, color: "#fff", marginBottom: 10 }}>
-              {error}
-            </Text>
-            <Text style={{ fontSize: 14, fontStyle: "italic", color: "#fff" }}>
-              Try again later.
-            </Text>
-          </View>
-        ) : (
-          <Animated.View
-            style={{
-              opacity: fadeAnim,
-              alignItems: "center",
-              justifyContent: "space-around",
-            }}
-          >
-            <StocksLineChart data={this.state.graphData} />
-          </Animated.View>
-        )}
+        <Animated.View
+          style={{
+            opacity: fadeAnim,
+            alignItems: "center",
+            justifyContent: "space-around",
+          }}
+        >
+          <StocksLineChart data={this.state.graphData} />
+        </Animated.View>
       </View>
     );
   }
 }
+const styles = StyleSheet.create({
+  errorContainer: {
+    width: Dimensions.get("window").width - 40,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#B00020",
+    padding: 20,
+    borderRadius: 8,
+    margin: 10,
+    marginTop: Dimensions.get("window").height / 2 - 200,
+  },
+  titleError: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#fff",
+    marginBottom: 10,
+    marginTop: 10,
+  },
+  descriptionError: {
+    fontSize: 14,
+    color: "#fff",
+    marginBottom: 10,
+  },
+  tryAgainText: {
+    fontSize: 14,
+    fontStyle: "italic",
+    color: "#fff",
+  },
+  ctaButton: {
+    backgroundColor: "#ff7300",
+    padding: 10,
+    borderRadius: 8,
+  },
+});
 
 export default GraphValues;

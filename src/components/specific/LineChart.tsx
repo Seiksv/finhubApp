@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Dimensions, Text } from "react-native";
+import { View, Dimensions, Text, StyleSheet } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
@@ -26,32 +26,10 @@ class StocksLineChart extends React.Component {
           justifyContent: "center",
         }}
       >
-        <Text
-          style={{
-            fontFamily: "Roboto",
-            fontSize: 26,
-            fontWeight: "900",
-            color: "#000",
-            marginLeft: 8,
-            letterSpacing: 0.15,
-            alignSelf: "center",
-            alignContent: "center",
-            alignItems: "center",
-            textAlign: "center",
-          }}
-        >
+        <Text style={styles.title}>
           Only showing the current Stocks Selected.
         </Text>
-        <Text
-          style={{
-            fontFamily: "Roboto",
-            fontSize: 16,
-            fontWeight: "500",
-            color: "#878f98",
-            marginVertical: 4,
-            paddingHorizontal: 16,
-          }}
-        >
+        <Text style={styles.desciption}>
           (For more stocks, please tap on the Watchlist below)
         </Text>
         <LineChart
@@ -80,27 +58,9 @@ class StocksLineChart extends React.Component {
             flex: 1,
           }}
         />
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            backgroundColor: "#e0e0e0",
-            paddingHorizontal: 16,
-            paddingVertical: 4,
-            borderRadius: 20,
-            marginVertical: 20,
-          }}
-        >
+        <View style={styles.infoCard}>
           <MaterialIcons name="error-outline" size={20} color="#878f98" />
-          <Text
-            style={{
-              fontFamily: "Roboto",
-              fontSize: 16,
-              fontWeight: "500",
-              color: "#878f98",
-              marginLeft: 8,
-            }}
-          >
+          <Text style={styles.infoText}>
             May some stocks takes time to load, please wait.
           </Text>
         </View>
@@ -108,5 +68,42 @@ class StocksLineChart extends React.Component {
     );
   }
 }
-
+const styles = StyleSheet.create({
+  title: {
+    fontFamily: "Roboto",
+    fontSize: 26,
+    fontWeight: "900",
+    color: "#000",
+    marginLeft: 8,
+    letterSpacing: 0.15,
+    alignSelf: "center",
+    alignContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+  },
+  desciption: {
+    fontFamily: "Roboto",
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#878f98",
+    marginVertical: 4,
+    paddingHorizontal: 16,
+  },
+  infoCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#e0e0e0",
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+    borderRadius: 20,
+    marginVertical: 20,
+  },
+  infoText: {
+    fontFamily: "Roboto",
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#878f98",
+    marginLeft: 8,
+  },
+});
 export default StocksLineChart;

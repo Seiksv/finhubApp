@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import GridCurrencyTicker from "../components/specific/GridCurrencyTicker";
 import "react-native-gesture-handler";
 import ExpoPushNotificationManager from "../components/specific/NotificationManager";
@@ -44,32 +44,8 @@ class HomeScreen extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <Text
-          style={{
-            fontFamily: "Roboto",
-            fontSize: 26,
-            fontWeight: "900",
-            color: "#000",
-            marginLeft: 8,
-            letterSpacing: 0.15,
-            alignSelf: "center",
-            alignContent: "center",
-            alignItems: "center",
-            textAlign: "center",
-          }}
-        >
-          Current Stocks
-        </Text>
-        <Text
-          style={{
-            fontFamily: "Roboto",
-            fontSize: 16,
-            fontWeight: "500",
-            color: "#878f98",
-            marginVertical: 4,
-            paddingHorizontal: 16,
-          }}
-        >
+        <Text style={styles.title}>Current Stocks</Text>
+        <Text style={styles.desciption}>
           If you want to see more stocks, please tap on the Watchlist below.
         </Text>
 
@@ -78,5 +54,27 @@ class HomeScreen extends Component {
     );
   }
 }
+const styles = StyleSheet.create({
+  title: {
+    fontFamily: "Roboto",
+    fontSize: 26,
+    fontWeight: "900",
+    color: "#000",
+    marginLeft: 8,
+    letterSpacing: 0.15,
+    alignSelf: "center",
+    alignContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+  },
+  desciption: {
+    fontFamily: "Roboto",
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#878f98",
+    marginVertical: 4,
+    paddingHorizontal: 16,
+  },
+});
 
 export default HomeScreen;

@@ -28,8 +28,6 @@ type State = {
 };
 
 class StockTicker extends Component<any, State> {
-  countdownTimer: any;
-
   constructor(props: any) {
     super(props);
     this.state = {
@@ -43,6 +41,7 @@ class StockTicker extends Component<any, State> {
       countdownTimer: null,
     };
   }
+  countdownTimer: any;
 
   useWebSocket: WebSocket | null = null;
 
