@@ -4,19 +4,9 @@ import { LineChart } from "react-native-chart-kit";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 class StocksLineChart extends React.Component {
-  componentDidUpdate(prevProps) {
-    // Verifica si los datos han cambiado y realiza alguna acción si es necesario
-    if (prevProps.data !== this.props.data) {
-      // Aquí podrías hacer algo con los nuevos datos, como un procesamiento adicional
-      // Pero si solo estás pasando los datos directamente al gráfico, esto podría no ser necesario
-    }
-  }
-
   render() {
     console.log(this.props.data);
-    const { data } = this.props; // Usa los datos pasados como props
-
-    // Asegúrate de que los datos no sean nulos o indefinidos
+    const { data } = this.props;
     if (
       !data ||
       data.labels.length === 0 ||
@@ -54,12 +44,12 @@ class StocksLineChart extends React.Component {
         </Text>
         <Text
           style={{
-            fontFamily: "Roboto", // Roboto es la fuente predilecta de Material Design. Asegúrate de tenerla disponible.
-            fontSize: 16, // Un tamaño de fuente estándar para texto.
-            fontWeight: "500", // Medium emphasis.
-            color: "#878f98", // Un color de texto primario en Material Design.
-            marginVertical: 4, // Espaciado vertical para separarlo de otros elementos.
-            paddingHorizontal: 16, // Espaciado horizontal para alinearse con el margen de Material Design.
+            fontFamily: "Roboto",
+            fontSize: 16,
+            fontWeight: "500",
+            color: "#878f98",
+            marginVertical: 4,
+            paddingHorizontal: 16,
           }}
         >
           (For more stocks, please tap on the Watchlist below)
@@ -92,14 +82,13 @@ class StocksLineChart extends React.Component {
         />
         <View
           style={{
-            flexDirection: "row", // Alinea el ícono y el texto horizontalmente
-            alignItems: "center", // Centra verticalmente el ícono y el texto
-            backgroundColor: "#e0e0e0", // Color de fondo gris para el badge
-            paddingHorizontal: 12, // Espaciado horizontal para el contenido del badge
-            paddingVertical: 4, // Espaciado vertical para el contenido del badge
-            borderRadius: 20, // Bordes redondeados para el badge
-            marginVertical: 20, // Espaciado vertical para separarlo de otros elementos
-            paddingHorizontal: 16, // Espaciado horizontal para alinearse con el margen
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: "#e0e0e0",
+            paddingHorizontal: 16,
+            paddingVertical: 4,
+            borderRadius: 20,
+            marginVertical: 20,
           }}
         >
           <MaterialIcons name="error-outline" size={20} color="#878f98" />
@@ -108,8 +97,8 @@ class StocksLineChart extends React.Component {
               fontFamily: "Roboto",
               fontSize: 16,
               fontWeight: "500",
-              color: "#878f98", // Color de texto
-              marginLeft: 8, // Espaciado entre el ícono y el texto
+              color: "#878f98",
+              marginLeft: 8,
             }}
           >
             May some stocks takes time to load, please wait.

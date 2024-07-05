@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-{
-  /* Contenido del modal */
-}
+
 import {
   View,
   Text,
@@ -21,11 +19,11 @@ export const globalEventEmitter = new EventEmitter();
 
 class StockSelect extends Component {
   state = {
-    selectedStocks: [], // Cambiado a un arreglo para almacenar múltiples selecciones
-    priceAlerts: [], // Arreglo para almacenar múltiples alertas de precio
+    selectedStocks: [],
+    priceAlerts: [],
     isModalVisible: false,
-    selectedStock: "AAPL", // Valor predeterminado para el picker
-    priceAlert: "", // Valor predeterminado para el input de alerta de precio
+    selectedStock: "AAPL",
+    priceAlert: "",
   };
 
   componentDidMount() {
@@ -34,17 +32,15 @@ class StockSelect extends Component {
 
   saveSelectedStock = async (selectedStock: String, priceAlert: String) => {
     const { selectedStocks, priceAlerts } = this.state;
-    const newSelectedStocks = [...selectedStocks, selectedStock]; // Agrega la nueva selección al arreglo existente
-    const newPriceAlerts = [...priceAlerts, priceAlert]; // Agrega la nueva alerta al arreglo existente
+    const newSelectedStocks = [...selectedStocks, selectedStock];
+    const newPriceAlerts = [...priceAlerts, priceAlert];
 
     try {
-      // Guarda los arreglos actualizados en AsyncStorage
       await AsyncStorage.setItem(
         "selectedStocks",
         JSON.stringify(newSelectedStocks)
       );
       await AsyncStorage.setItem("priceAlerts", JSON.stringify(newPriceAlerts));
-      // Actualiza el estado con los nuevos arreglos
       this.setState({
         selectedStocks: newSelectedStocks,
         priceAlerts: newPriceAlerts,
@@ -61,7 +57,6 @@ class StockSelect extends Component {
       const selectedStocks = await AsyncStorage.getItem("selectedStocks");
       const priceAlerts = await AsyncStorage.getItem("priceAlerts");
       if (selectedStocks !== null && priceAlerts !== null) {
-        // Actualiza el estado con los arreglos cargados
         this.setState({
           selectedStocks: JSON.parse(selectedStocks),
           priceAlerts: JSON.parse(priceAlerts),
@@ -74,18 +69,15 @@ class StockSelect extends Component {
 
   deleteSelectedItem = async (index: number) => {
     let { selectedStocks, priceAlerts } = this.state;
-    // Elimina el ítem en el índice proporcionado de ambos arreglos
     selectedStocks.splice(index, 1);
     priceAlerts.splice(index, 1);
 
     try {
-      // Guarda los arreglos actualizados en AsyncStorage
       await AsyncStorage.setItem(
         "selectedStocks",
         JSON.stringify(selectedStocks)
       );
       await AsyncStorage.setItem("priceAlerts", JSON.stringify(priceAlerts));
-      // Actualiza el estado con los arreglos actualizados
       this.setState({ selectedStocks, priceAlerts });
       globalEventEmitter.emit("stockUpdated");
     } catch (error) {
@@ -106,7 +98,7 @@ class StockSelect extends Component {
             <Text>Alerta de precio: {priceAlerts[index]}</Text>
             <Button
               title="Eliminar"
-              onPress={() => this.deleteSelectedItem(index)} // Llama a deleteSelectedItem con el índice del ítem
+              onPress={() => this.deleteSelectedItem(index)}
             />
           </View>
         )}
@@ -115,7 +107,6 @@ class StockSelect extends Component {
   };
 
   renderStockList = () => {
-    // Asumiendo que selectedStocks es un array de objetos stock
     const { selectedStocks, priceAlerts } = this.state;
 
     return (
@@ -134,7 +125,7 @@ class StockSelect extends Component {
           >
             <Card.Title
               title={"STOCK SELECTED"}
-              titleStyle={{ fontWeight: "bold", fontSize: 12 }} // Agrega más peso al título
+              titleStyle={{ fontWeight: "bold", fontSize: 12 }}
             />
 
             <Card.Content>
@@ -190,7 +181,7 @@ class StockSelect extends Component {
           <TouchableOpacity
             style={styles.modalOverlay}
             activeOpacity={1}
-            onPressOut={() => this.setModalVisible(false)} // Cierra el modal al tocar fuera del formulario
+            onPressOut={() => this.setModalVisible(false)}
           >
             <View
               style={styles.modalView}
@@ -236,8 +227,8 @@ class StockSelect extends Component {
                   style={{
                     marginTop: 10,
                     flex: 1,
-                    borderWidth: 2, // Grosor del borde
-                    borderColor: "#B00020", // Color del borde
+                    borderWidth: 2,
+                    borderColor: "#B00020",
                   }}
                 >
                   Cancel

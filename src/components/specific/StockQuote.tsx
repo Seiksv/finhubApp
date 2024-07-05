@@ -44,14 +44,12 @@ class StockQuote extends Component<StockQuoteProps> {
         </View>
       );
 
-    // Asumiendo que 'c' es el precio actual y deseas mostrarlo
     const precioActual = quote ? quote.c : "No disponible";
 
     return (
       <View>
         <Text>{this.props.symbol}</Text>
         <Text>Precio actual: {precioActual}</Text>
-        {/* Si deseas mostrar más información, asegúrate de convertirla a cadena */}
       </View>
     );
   }

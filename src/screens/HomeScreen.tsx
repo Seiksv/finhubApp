@@ -71,12 +71,12 @@ class HomeScreen extends Component {
         </Text>
         <Text
           style={{
-            fontFamily: "Roboto", // Roboto es la fuente predilecta de Material Design. Asegúrate de tenerla disponible.
-            fontSize: 16, // Un tamaño de fuente estándar para texto.
-            fontWeight: "500", // Medium emphasis.
-            color: "#878f98", // Un color de texto primario en Material Design.
-            marginVertical: 4, // Espaciado vertical para separarlo de otros elementos.
-            paddingHorizontal: 16, // Espaciado horizontal para alinearse con el margen de Material Design.
+            fontFamily: "Roboto",
+            fontSize: 16,
+            fontWeight: "500",
+            color: "#878f98",
+            marginVertical: 4,
+            paddingHorizontal: 16,
           }}
         >
           If you want to see more stocks, please tap on the Watchlist below.

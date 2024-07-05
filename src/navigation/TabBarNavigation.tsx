@@ -19,16 +19,14 @@ class TabBarNavigation extends Component {
               let iconName;
 
               if (route.name === "WatchList") {
-                iconName = focused ? "list-alt" : "list-alt"; // Cambia estos nombres por los íconos correspondientes
+                iconName = focused ? "list-alt" : "list-alt";
               } else if (route.name === "LiveStocks") {
-                iconName = focused ? "show-chart" : "show-chart"; // Cambia estos nombres por los íconos correspondientes
+                iconName = focused ? "show-chart" : "show-chart";
               } else if (route.name === "GraphValues") {
-                iconName = focused ? "bar-chart" : "bar-chart"; // Cambia estos nombres por los íconos correspondientes
+                iconName = focused ? "bar-chart" : "bar-chart";
               } else if (route.name === "Profile") {
-                iconName = focused ? "account-circle" : "account-circle"; // Cambia estos nombres por los íconos correspondientes
+                iconName = focused ? "account-circle" : "account-circle";
               }
-
-              // Puedes agregar más condiciones para otras pestañas aquí
 
               return (
                 <MaterialIcons name={iconName} size={size} color={color} />

@@ -10,12 +10,10 @@ import StocksLineChart from "../components/specific/LineChart";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { globalEventEmitter } from "./StockSelect";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-
-import { SOCKET_URL, API_KEY } from "../utils/constans"; // Asegúrate de ajustar la ruta de importación según sea necesario
-
+import { SOCKET_URL, API_KEY } from "../utils/constans";
 class GraphDataModel {
   labels: string[];
-  legend: ["Rainy Days"]; // optional
+  legend: ["Rainy Days"];
   datasets: {
     data: number[];
     strokeWidth: number;
@@ -220,7 +218,7 @@ class GraphValues extends Component {
               width: Dimensions.get("window").width - 40,
               alignItems: "center",
               justifyContent: "center",
-              backgroundColor: "#B00020", // Rojo semitransparente
+              backgroundColor: "#B00020",
               padding: 20,
               borderRadius: 8,
               margin: 10,

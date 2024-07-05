@@ -16,7 +16,7 @@ const CustomPicker = () => {
 
 const styles = StyleSheet.create({
   pickerContainer: {
-    padding: 10, // Aumenta el área tocable alrededor del Picker
+    padding: 10, 
   },
   picker: {
     height: 50,
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginBottom: 20,
   },
-  // Incluye otros estilos aquí
+  
 });
 
 export default CustomPicker;
