@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "228399626634",
+    "project_id": "finnhubtestapp",
+    "storage_bucket": "finnhubtestapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228399626634:android:b397ecbbfe11f4fd16f073",
+        "android_client_info": {
+          "package_name": "om.seiks.finhub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "228399626634-0ec3528doev17t38265v71b28cp003ud.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "om.seiks.finhub",
+            "certificate_hash": "639cec81d91658a1c22d7e863de6aafb93c161f9"
+          }
+        },
+        {
+          "client_id": "228399626634-nfetl737gt96fe8m2kl4ro413tn73uo0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxEgp8QYRirtM61Dj_pZz45zuk1V6EcJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "228399626634-nfetl737gt96fe8m2kl4ro413tn73uo0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

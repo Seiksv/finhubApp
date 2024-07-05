@@ -1,27 +1,38 @@
 {
   "expo": {
     "name": "finhubApp",
-    "slug": "finhubApp",
+    "slug": "finhub",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./src/assets/images/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./src/assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.seiks.finhub"
     },
+    "plugins": ["@react-native-google-signin/google-signin"],
     "android": {
+      "googleServicesFile": "./google-services.json",
+
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.seiks.finhub"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./src/assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ea4a3973-ae54-4083-9b79-5832a2ad3670"
+      }
+    },
+    "owner": "seiks"
   }
 }

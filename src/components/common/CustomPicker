@@ -1,0 +1,31 @@
+import React from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Picker } from "@react-native-picker/picker";
+
+const CustomPicker = () => {
+  return (
+    <TouchableOpacity activeOpacity={0.8}>
+      <View style={styles.pickerContainer}>
+        <Picker  style={styles.picker}>
+          {/* Tus opciones del Picker */}
+        </Picker>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
+  pickerContainer: {
+    padding: 10, // Aumenta el área tocable alrededor del Picker
+  },
+  picker: {
+    height: 50,
+    width: 150,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 4,
+    marginBottom: 20,
+  },
+  // Incluye otros estilos aquí
+});
+
+export default CustomPicker;
