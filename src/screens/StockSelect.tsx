@@ -218,6 +218,10 @@ class StockSelect extends Component {
                 placeholder="Example 50"
                 keyboardType="numeric"
               />
+
+              <Text>
+                The notifications functionality works only in LiveStocks tab
+              </Text>
               <View style={styles.buttonContainer}>
                 <Button
                   onPress={() => this.setModalVisible(false)}

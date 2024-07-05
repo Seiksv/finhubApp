@@ -27,15 +27,6 @@ class HomeScreen extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-
-    this.notificationManager
-      .registerForPushNotificationsAsync()
-      .then((token) => {
-        if (token !== void 0 && this._isMounted) {
-          this.notificationManager.sendPushNotification(token);
-          this.saveTokenAsyncStorage(token);
-        }
-      });
   }
 
   saveTokenAsyncStorage = async (token: string) => {

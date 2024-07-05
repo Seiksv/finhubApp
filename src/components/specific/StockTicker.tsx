@@ -165,18 +165,26 @@ class StockTicker extends Component<any, State> {
             direction = "up";
 
             console.log("Selected Stocks", this.state.selectedStocks);
-            console.log("Price Alerts", this.state.priceAlerts);
+            console.log(
+              "Price Alerts",
+              parseInt(
+                this.state.priceAlerts[this.state.selectedStocks.indexOf(s)]
+              )
+            );
             console.log("Symbol", s);
             console.log("Price", p);
             if (
-              this.state.selectedStocks.includes(s) &&
-              p > this.state.priceAlerts[this.state.selectedStocks.indexOf(s)]
+              p >
+              parseInt(
+                this.state.priceAlerts[this.state.selectedStocks.indexOf(s)]
+              )
             ) {
               let notificationManager = new ExpoPushNotificationManager({
                 title: s + " current price alert reached",
                 body: `Current price: ${p}`,
               });
 
+              console.log("Sending push notification");
               notificationManager.sendPushNotification(this.state.token);
             }
           }
